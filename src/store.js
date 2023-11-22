@@ -5,6 +5,13 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    
+    /* Находим наибольший индекс в массиве и прибавляем 1, чтобы обеспечить уникальность номеров при любом изначальном состоянии 
+    при условии сохранения формата элементов, конечно) */
+    this.nextUniqueItemCode = initState.list.reduce(
+      (accumulator, item) => item.code > accumulator ? item.code : accumulator, 
+      0,
+      ) + 1;
   }
 
   /**
@@ -18,6 +25,14 @@ class Store {
     return () => {
       this.listeners = this.listeners.filter(item => item !== listener);
     }
+  }
+
+  /**
+   * Получить следующий уникальный код записи
+   * @returns {Number}
+   */
+  getUniqueItemCode() {
+    return this.nextUniqueItemCode++;
   }
 
   /**
@@ -44,7 +59,7 @@ class Store {
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: this.state.list.length + 1, title: 'Новая запись'}]
+      list: [...this.state.list, {code: this.getUniqueItemCode(), title: 'Новая запись'}]
     })
   };
 
