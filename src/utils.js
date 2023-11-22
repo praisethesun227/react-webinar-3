@@ -26,3 +26,26 @@ export function createElement(name, props = {}, ...children) {
 
   return element;
 }
+
+export function buildSelectionsCountString(count) {
+  if (!count) {
+    return '';
+  }
+
+  const countStr = `${count}`;
+  const beginning = ` | Выделяли ${countStr}`;
+
+  if (countStr.charAt(countStr.length - 2) === '1') {
+    return beginning + ' раз';
+  }
+
+  switch(countStr.charAt(countStr.length - 1)) {
+    case '2':
+    case '3':
+    case '4':
+      return beginning + ' раза';
+
+    default:
+      return beginning + ' раз';
+  }
+}
