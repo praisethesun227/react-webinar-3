@@ -7,7 +7,7 @@ class Store {
     this.listeners = []; // Слушатели изменений состояния
     
     /* Находим наибольший индекс в массиве и прибавляем 1, чтобы обеспечить уникальность номеров при любом изначальном состоянии 
-    при условии сохранения формата элементов, конечно) */
+    (при условии сохранения формата элементов, конечно) */
     this.nextUniqueItemCode = initState.list.reduce(
       (accumulator, item) => item.code > accumulator ? item.code : accumulator, 
       0,
