@@ -28,7 +28,10 @@ function App({store}) {
                 <div className='Item-code'>{item.code}</div>
                 <div className='Item-title'>{item.title + buildSelectionsCountString(item.selectionsCount)}</div>
                 <div className='Item-actions'>
-                  <button onClick={() => store.deleteItem(item.code)}>
+                  <button onClick={(e) => {
+                      e.stopPropagation();
+                      store.deleteItem(item.code)
+                    }}>
                     Удалить
                   </button>
                 </div>
