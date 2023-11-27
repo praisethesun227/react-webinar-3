@@ -27,25 +27,28 @@ export function createElement(name, props = {}, ...children) {
   return element;
 }
 
-export function buildSelectionsCountString(count) {
+export function pluralize(count, one, some, many) {
   if (!count) {
     return '';
   }
 
   const countStr = `${count}`;
-  const beginning = ` | Выделяли ${countStr}`;
+
+  if (countStr == '1') {
+    return one;
+  }
 
   if (countStr.charAt(countStr.length - 2) === '1') {
-    return beginning + ' раз';
+    return some;
   }
 
   switch(countStr.charAt(countStr.length - 1)) {
     case '2':
     case '3':
     case '4':
-      return beginning + ' раза';
+      return many;
 
     default:
-      return beginning + ' раз';
+      return some;
   }
 }
