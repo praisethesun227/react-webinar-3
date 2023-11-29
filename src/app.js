@@ -17,10 +17,6 @@ function App({store}) {
     onDeleteItem: useCallback((code) => {
       store.deleteItem(code);
     }, [store]),
-
-    onSelectItem: useCallback((code) => {
-      store.selectItem(code);
-    }, [store]),
   }
 
   return (
@@ -28,8 +24,7 @@ function App({store}) {
       <Head title='Приложение на чистом JS'/>
       <Controls/>
       <List list={list}
-            onDeleteItem={callbacks.onDeleteItem}
-            onSelectItem={callbacks.onSelectItem}/>
+            onDeleteItem={callbacks.onDeleteItem}/>
     </PageLayout>
   );
 }
