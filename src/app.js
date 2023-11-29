@@ -14,17 +14,13 @@ function App({store}) {
   const list = store.getState().list;
 
   const callbacks = {
-    onDeleteItem: useCallback((code) => {
-      store.deleteItem(code);
-    }, [store]),
   }
 
   return (
     <PageLayout>
       <Head title='Приложение на чистом JS'/>
       <Controls/>
-      <List list={list}
-            onDeleteItem={callbacks.onDeleteItem}/>
+      <List list={list}/>
     </PageLayout>
   );
 }
