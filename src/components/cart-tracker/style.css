@@ -1,0 +1,14 @@
+.CartTracker {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-bottom: 1px dashed #ccc;
+}
+
+.CartTracker-info {
+  padding-left: 15px;
+}
+
+.CartTracker .Controls-btn1 {
+  width: 80px;
+}

@@ -40,47 +40,63 @@ class Store {
     for (const listener of this.listeners) listener();
   }
 
-  /**
-   * Добавление новой записи
-   */
-  addItem() {
+  openCart() {
     this.setState({
-      ...this.state,
-      list: [...this.state.list, {code: generateCode(), title: 'Новая запись'}]
-    })
-  };
+        ...this.state,
+        isCartOpen: true
+      }
+    )
+  }
 
-  /**
-   * Удаление записи по коду
-   * @param code
-   */
-  deleteItem(code) {
+  closeCart() {
     this.setState({
-      ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code)
-    })
-  };
+        ...this.state,
+        isCartOpen: false
+      }
+    )
+  }
 
-  /**
-   * Выделение записи по коду
-   * @param code
-   */
-  selectItem(code) {
-    this.setState({
-      ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
+  addToCart(code, count) {
+    this.state.cartUniqueItems.add(code);
+
+    let priceDiff;
+    const newList = this.state.list.map(item => {
+      if (item.code === code) {
+        priceDiff = item.price * count;
+        return {
+          ...item,
+          count: item.count + count || count
         }
-        // Сброс выделения если выделена
-        return item.selected ? {...item, selected: false} : item;
-      })
+      }
+      return item;
+    })
+
+    this.setState({
+      ...this.state,
+      list: newList,
+      cartTotalPrice: this.state.cartTotalPrice + priceDiff,
+    })
+  }
+
+  removeFromCart(code, count) {
+    this.state.cartUniqueItems.delete(code);
+
+    let priceDiff;
+    const newList = this.state.list.map(item => {
+      if (item.code === code) {
+        priceDiff = item.price * count;
+        return {
+          ...item,
+          count: count >= item.count ? 0 : item.count - count
+        }
+      }
+      return item;
+    })
+
+    this.setState({
+      ...this.state,
+      list: newList,
+      cartTotalPrice: priceDiff >= this.state.cartTotalPrice ? 0 : this.state.cartTotalPrice - priceDiff,
     })
   }
 }

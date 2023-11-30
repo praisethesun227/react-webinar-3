@@ -13,8 +13,26 @@
   padding: 20px 10px;
 }
 
+.Item-price {
+  padding: 20px 10px;
+}
+
 .Item-actions {
   display: flex;
   justify-content: flex-end;
   padding: 20px 20px 20px 10px;
+}
+
+.Item-addToCartBtn {
+  width: 76px;
+}
+
+.Item-removeFromCartBtn {
+  width: 76px;
+}
+
+.Item-count {
+  margin-left: 60px;
+  padding: 20px 12px 20px 0;
+  white-space: nowrap;
 }
