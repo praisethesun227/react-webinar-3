@@ -16,7 +16,8 @@ const store = new Store({
   ],
   isCartOpen: false,
   cartTotalPrice: 0,
-  cartUniqueItems: new Set()
+  cartUniqueItemsCount: 0,
+  cart: {items: new Map()}
 });
 
 const root = createRoot(document.getElementById('root'));

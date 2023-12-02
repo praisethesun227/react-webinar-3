@@ -1,6 +1,5 @@
 import React, {useCallback} from 'react';
 import List from "./components/list";
-import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
 import Cart from "./components/cart"
@@ -23,27 +22,21 @@ function App({store}) {
       store.closeCart();
     }, [store]),
 
-    onAddToCart: useCallback((code, count) => {
-      store.addToCart(code, count);
+    onAddToCart: useCallback((item) => {
+      store.addToCart(item, 1);
     }, [store]),
 
-    onRemoveFromCart: useCallback((code, count) => {
-      store.removeFromCart(code, count);
+    onRemoveFromCart: useCallback((item) => {
+      store.removeFromCart(item, state.cart.items.get(item.code).count);
     }, [store])
   }
-
-  const uniqueItemsCount = state.cartUniqueItems.size;
-  const cartItems = state.list.filter(item => {
-    if (item.count > 0) return item;
-  })
 
   return (
     <PageLayout>
       <Head title='Магазин'/>
       <CartTracker onOpenCart={callbacks.onOpenCart}
-                   totalCount={uniqueItemsCount}
+                   totalCount={state.cartUniqueItemsCount}
                    totalPrice={state.cartTotalPrice}
-                   openCartBtnText={'Перейти'}
       />
       <List list={state.list}
             onAddToCart={callbacks.onAddToCart}
@@ -53,7 +46,7 @@ function App({store}) {
             onCloseCart={callbacks.onCloseCart}
             totalPrice={state.cartTotalPrice}
             onRemoveFromCart={callbacks.onRemoveFromCart}
-            goods={cartItems}
+            cart={state.cart}
       />
     </PageLayout>
   );

@@ -8,9 +8,16 @@ import List from "../list"
 import { formatPrice } from "../../utils";
 
 function Cart(props) {
+  if (!props.isCartOpen) return null;
+
   const cn = bem('Cart');
 
-  if (!props.isCartOpen) return null;
+  const goods = [];
+  for (const good of props.cart.items.values()) {
+    const item = good.item;
+    item.count = good.count;
+    goods.push(item);
+  }
 
   return (
     <div className={cn()}>
@@ -32,10 +39,11 @@ function Cart(props) {
             />
           </Head>
           <div className={cn('body')}>
-          {props.goods.length ?
+          {
+            goods.length ?
             <>
               <div className={cn('items')}>
-                <List list={props.goods}
+                <List list={goods}
                       cartDisplay={true}
                       onRemoveFromCart={props.onRemoveFromCart}
                 />
@@ -60,7 +68,9 @@ function Cart(props) {
 Cart.propTypes = {
   isCartOpen: PropTypes.bool,
   onCloseCart: PropTypes.func,
-  goods: PropTypes.array,
+  cart: PropTypes.shape({
+    items: Map.prototype
+  }),
   onRemoveFromCart: PropTypes.func,
   totalPrice: PropTypes.number,
 }
@@ -68,7 +78,8 @@ Cart.propTypes = {
 Cart.defaultProps = {
   isCartOpen: false,
   onCloseCart: () => {},
-  onRemoveFromCart: () => {}
+  onRemoveFromCart: () => {},
+  cart: {items: new Map()}
 }
 
 export default React.memo(Cart);

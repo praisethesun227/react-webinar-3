@@ -16,12 +16,12 @@ function Item(props) {
       <div className={cn('actions')}>
       {props.cartDisplay ?
         <button className={cn('removeFromCartBtn')}
-                onClick={() => props.onRemoveFromCart(props.item.code, props.item.count)}>
+                onClick={() => props.onRemoveFromCart(props.item)}>
                 Удалить
         </button>
         :
         <button className={cn('addToCartBtn')}
-                onClick={() => props.onAddToCart(props.item.code, 1)}>
+                onClick={() => props.onAddToCart(props.item)}>
                 Добавить
         </button>
       }

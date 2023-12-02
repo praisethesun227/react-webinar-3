@@ -56,48 +56,55 @@ class Store {
     )
   }
 
-  addToCart(code, count) {
-    this.state.cartUniqueItems.add(code);
+  addToCart(item, count) {
+    const cartItems = this.state.cart.items;
+    let uniqueItemsCount = this.state.cartUniqueItemsCount;
 
-    let priceDiff;
-    const newList = this.state.list.map(item => {
-      if (item.code === code) {
-        priceDiff = item.price * count;
-        return {
-          ...item,
-          count: item.count + count || count
-        }
-      }
-      return item;
-    })
+    if(!cartItems.has(item.code)) {
+      cartItems.set(item.code, {item: item, count: count});
+      uniqueItemsCount++;
+    }
+
+    else {
+      cartItems.set(item.code, {item: item, count: cartItems.get(item.code).count + count});
+    }
 
     this.setState({
       ...this.state,
-      list: newList,
-      cartTotalPrice: this.state.cartTotalPrice + priceDiff,
+      cartUniqueItemsCount: uniqueItemsCount,
+      cartTotalPrice: this.state.cartTotalPrice + item.price * count,
+      cart: {...this.state.cart, items: cartItems}
     })
   }
 
-  removeFromCart(code, count) {
-    this.state.cartUniqueItems.delete(code);
+  removeFromCart(item, count) {
+    const cartItems = this.state.cart.items;
+    let uniqueItemsCount = this.state.cartUniqueItemsCount;
 
-    let priceDiff;
-    const newList = this.state.list.map(item => {
-      if (item.code === code) {
-        priceDiff = item.price * count;
-        return {
-          ...item,
-          count: count >= item.count ? 0 : item.count - count
-        }
+    if(!cartItems.has(item.code)) {
+      console.log(`Attempted to delete nonexistent cart item ${item.code}`)
+      return;
+    }
+
+    else {
+      const itemCount = cartItems.get(item.code).count;
+
+      if (count >= itemCount) {
+        cartItems.delete(item.code);
+        uniqueItemsCount--;
       }
-      return item;
-    })
 
-    this.setState({
-      ...this.state,
-      list: newList,
-      cartTotalPrice: priceDiff >= this.state.cartTotalPrice ? 0 : this.state.cartTotalPrice - priceDiff,
-    })
+      else {
+        cartItems.set(item.code, {item: item, count: cartItems.get(item.code).count - count});
+      }
+
+      this.setState({
+        ...this.state,
+        cartUniqueItemsCount: uniqueItemsCount,
+        cartTotalPrice: this.state.cartTotalPrice - item.price * count,
+        cart: {...this.state.cart, items: cartItems}
+      })
+    }
   }
 }
 
