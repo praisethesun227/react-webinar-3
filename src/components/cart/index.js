@@ -69,7 +69,7 @@ Cart.propTypes = {
   isCartOpen: PropTypes.bool,
   onCloseCart: PropTypes.func,
   cart: PropTypes.shape({
-    items: Map.prototype
+    items: PropTypes.object
   }),
   onRemoveFromCart: PropTypes.func,
   totalPrice: PropTypes.number,
