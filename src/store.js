@@ -82,29 +82,26 @@ class Store {
     let uniqueItemsCount = this.state.cartUniqueItemsCount;
 
     if(!cartItems.has(item.code)) {
-      console.log(`Attempted to delete nonexistent cart item ${item.code}`)
+      console.log(`Attempted to delete nonexistent cart item ${item.code}`);
       return;
     }
 
-    else {
-      const itemCount = cartItems.get(item.code).count;
-
-      if (count >= itemCount) {
-        cartItems.delete(item.code);
-        uniqueItemsCount--;
-      }
-
-      else {
-        cartItems.set(item.code, {item: item, count: cartItems.get(item.code).count - count});
-      }
-
-      this.setState({
-        ...this.state,
-        cartUniqueItemsCount: uniqueItemsCount,
-        cartTotalPrice: this.state.cartTotalPrice - item.price * count,
-        cart: {...this.state.cart, items: cartItems}
-      })
+    const itemCount = cartItems.get(item.code).count;
+    if (count >= itemCount) {
+      cartItems.delete(item.code);
+      uniqueItemsCount--;
     }
+
+    else {
+      cartItems.set(item.code, {item: item, count: cartItems.get(item.code).count - count});
+    }
+
+    this.setState({
+      ...this.state,
+      cartUniqueItemsCount: uniqueItemsCount,
+      cartTotalPrice: this.state.cartTotalPrice - item.price * count,
+      cart: {...this.state.cart, items: cartItems}
+    })
   }
 }
 
