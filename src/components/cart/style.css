@@ -22,6 +22,11 @@
   margin: 70px 0;
 }
 
+.Cart-items {
+  max-height: 450px;
+  overflow: auto;
+}
+
 .Cart .Head {
   display: flex;
   justify-content: space-between;
