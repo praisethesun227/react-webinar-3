@@ -8,6 +8,7 @@ import { plural } from "../../utils";
 
 function CartTracker (props) {
   const cn = bem('CartTracker');
+
   return (
     <div className={cn()}>
       <span>В корзине:</span>
@@ -20,7 +21,7 @@ function CartTracker (props) {
         }
       </strong>
       <Controls handleClick={props.onOpenCart}
-                text={props.openCartBtnText}
+                text={'Перейти'}
       />
     </div>
   )
@@ -30,12 +31,10 @@ CartTracker.propTypes = {
   totalCount: PropTypes.number,
   totalPrice: PropTypes.number,
   onOpenCart: PropTypes.func,
-  openCartBtnText: PropTypes.string
 }
 
 CartTracker.defaultProps = {
   onOpenCart: () => {},
-  openCartBtnText: 'Перейти'
 }
 
 export default React.memo(CartTracker);
