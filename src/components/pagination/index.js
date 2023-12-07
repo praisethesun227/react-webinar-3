@@ -1,6 +1,7 @@
 import {memo, useState} from 'react';
 import './style.css';
 import {cn as bem} from "@bem-react/classname";
+import PropTypes from "prop-types";
 
 function Pagination(props) {
   if (props.itemsPerPage >= props.itemsTotal) {
@@ -75,3 +76,13 @@ function Pagination(props) {
 }
 
 export default memo(Pagination)
+
+Pagination.propTypes = {
+  itemsTotal: PropTypes.number,
+  itemsPerPage: PropTypes.number,
+  loadPage: PropTypes.func
+}
+
+Pagination.defaultProps = {
+  loadPage: () => {}
+}
