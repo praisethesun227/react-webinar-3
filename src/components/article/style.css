@@ -1,0 +1,28 @@
+.Article {
+  padding-left: 40px;
+  padding-top: 40px;
+  font-size: 18px;
+}
+
+.Article-country {
+  font-weight: 700;
+}
+
+.Article-categoryTitle {
+  font-weight: 700;
+}
+
+.Article-year {
+  font-weight: 700;
+}
+
+.Article-priceTitle {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.Article-priceValue {
+  font-size: 24px;
+  font-weight: 700;
+}
+

@@ -11,7 +11,8 @@ class Catalog extends StoreModule {
   initState() {
     return {
       list: [],
-      totalCount: 0
+      totalCount: 0,
+      activeArticle: {}
     }
   }
 
@@ -25,6 +26,22 @@ class Catalog extends StoreModule {
       list: json.result.items,
       totalCount: json.result.count ? json.result.count : oldState.totalCount
     }, 'Загружены товары из АПИ');
+  }
+
+  async loadArticle(id, fields = '*,madeIn(title,code),category(title)') {
+    const result = await this.getArticle(id, fields);
+
+    this.setState({
+      ...this.getState(),
+      activeArticle: result
+    }, 'Загружен товар по id из АПИ')
+  }
+
+  async getArticle(id, fields = '*,madeIn(title,code),category(title)') {
+    const response = await fetch(`/api/v1/articles/${id}?fields=${fields}`);
+    const json = await response.json();
+
+    return json.result;
   }
 }
 
