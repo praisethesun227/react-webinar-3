@@ -1,0 +1,31 @@
+.Pagination {
+  display: flex;
+  padding: 22px;
+  float: right;
+}
+
+.Pagination-pageButton {
+  padding: 2px 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.Pagination-pageButton:hover:not(.Pagination-pageButton_selected) {
+  background-color: #E1E1E1;
+}
+
+.Pagination-pageButton_selected {
+  color: white;
+  background-color: #0087E9;
+}
+
+.Pagination-ellipsis {
+  padding: 2px 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #CCC;
+  cursor: default;
+}
