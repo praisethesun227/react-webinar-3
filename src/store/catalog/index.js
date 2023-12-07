@@ -12,6 +12,7 @@ class Catalog extends StoreModule {
     return {
       list: [],
       totalCount: 0,
+      currentPage: 1,
       activeArticle: {}
     }
   }
@@ -24,7 +25,8 @@ class Catalog extends StoreModule {
     this.setState({
       ...oldState,
       list: json.result.items,
-      totalCount: json.result.count ? json.result.count : oldState.totalCount
+      totalCount: json.result.count ? json.result.count : oldState.totalCount,
+      currentPage: Math.ceil(skip / limit) + 1
     }, 'Загружены товары из АПИ');
   }
 

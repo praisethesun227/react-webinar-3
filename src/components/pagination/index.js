@@ -1,4 +1,4 @@
-import {memo, useState} from 'react';
+import {memo} from 'react';
 import './style.css';
 import {cn as bem} from "@bem-react/classname";
 import PropTypes from "prop-types";
@@ -8,13 +8,12 @@ function Pagination(props) {
     return null;
   }
 
+  const currentPage = props.activePage;
   const cn = bem('Pagination')
-  const [currentPage, setCurrentPage] = useState(1);
 
   const callbacks = {
     onLoadPage: (page) => {
       props.loadPage(props.itemsPerPage, page);
-      setCurrentPage(page);
     }
   }
 
@@ -62,7 +61,6 @@ function Pagination(props) {
           return (
             <div key={page} className={currentPage === page ? cn('pageButton', {selected: true}) : cn('pageButton')}
                  onClick={() => {
-                   setCurrentPage(page);
                    callbacks.onLoadPage(page);
                  }}
             >

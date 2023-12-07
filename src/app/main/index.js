@@ -7,7 +7,7 @@ import List from "../../components/list";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import Pagination from "../../components/pagination";
-import {Route, Routes, useLocation} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Articles from "../articles";
 
 function Main() {
@@ -23,7 +23,8 @@ function Main() {
     amount: state.basket.amount,
     sum: state.basket.sum,
     articleCount: state.catalog.totalCount,
-    location: state.location.locationName
+    location: state.location.locationName,
+    currentPage: state.catalog.currentPage
   }));
 
   const callbacks = {
@@ -31,9 +32,9 @@ function Main() {
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
-    loadPage: useCallback((itemsPerPage, page) =>
-      store.actions.catalog.load(itemsPerPage, itemsPerPage * (page - 1)), [store]
-    ),
+    loadPage: useCallback((itemsPerPage, page) => {
+        store.actions.catalog.load(itemsPerPage, itemsPerPage * (page - 1));
+      }, [store]),
     changeLocation: useCallback((location) => store.actions.location.setLocation(location), [store])
   }
 
@@ -57,6 +58,7 @@ function Main() {
               <List list={select.list} renderItem={renders.item}/>
               <Pagination itemsTotal={select.articleCount}
                           itemsPerPage={10}
+                          activePage={select.currentPage}
                           loadPage={callbacks.loadPage}
               />
             </>
