@@ -13,7 +13,6 @@ import Articles from "../articles";
 function Main() {
 
   const store = useStore();
-  const location = useLocation();
 
   useEffect(() => {
     store.actions.catalog.load(10, 0, 'items(_id, title, price),count');
@@ -34,12 +33,13 @@ function Main() {
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     loadPage: useCallback((itemsPerPage, page) =>
       store.actions.catalog.load(itemsPerPage, itemsPerPage * (page - 1)), [store]
-    )
+    ),
+    changeLocation: useCallback((location) => store.actions.location.setLocation(location), [store])
   }
 
   const renders = {
     item: useCallback((item) => {
-      return <Item item={item} onAdd={callbacks.addToBasket}/>
+      return <Item item={item} onAdd={callbacks.addToBasket} onClick={callbacks.changeLocation}/>
     }, [callbacks.addToBasket]),
   };
 
@@ -47,6 +47,7 @@ function Main() {
     <PageLayout>
       <Head title={select.location}/>
       <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
+                  onChangeLoc={callbacks.changeLocation}
                   sum={select.sum}/>
       <Routes>
         <Route

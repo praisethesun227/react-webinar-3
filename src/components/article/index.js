@@ -2,6 +2,7 @@ import {memo} from 'react';
 import './style.css';
 import {cn as bem} from '@bem-react/classname';
 import {numberFormat} from "../../utils";
+import PropTypes from "prop-types";
 
 function Article(props) {
   const cn = bem('Article');
@@ -41,3 +42,23 @@ function Article(props) {
 }
 
 export default memo(Article);
+
+Article.propTypes = {
+  info: PropTypes.shape({
+    description: PropTypes.string,
+    madeIn: PropTypes.shape({
+      title: PropTypes.string,
+      code: PropTypes.string
+    }),
+    category: PropTypes.shape({
+      title: PropTypes.string
+    }),
+    edition: PropTypes.number,
+    price: PropTypes.number
+  }).isRequired,
+  onAdd: PropTypes.func
+}
+
+Article.defaultProps = {
+  onAdd: () => {}
+}

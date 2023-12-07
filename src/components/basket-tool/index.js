@@ -5,11 +5,11 @@ import {numberFormat, plural} from "../../utils";
 import './style.css';
 import {Link} from "react-router-dom";
 
-function BasketTool({sum, amount, onOpen}) {
+function BasketTool({sum, amount, onOpen, onChangeLoc}) {
   const cn = bem('BasketTool');
   return (
     <div className={cn()}>
-      <Link className={cn('linkMain')} to={'/'}>Главная</Link>
+      <Link onClick={() => onChangeLoc('Магазин')} className={cn('linkMain')} to={'/'}>Главная</Link>
       <span className={cn('label')}>В корзине:</span>
       <span className={cn('total')}>
         {amount
@@ -33,7 +33,6 @@ BasketTool.propTypes = {
 };
 
 BasketTool.defaultProps = {
-  onOpen: () => {},
   sum: 0,
   amount: 0
 }
