@@ -76,8 +76,9 @@ function Pagination(props) {
 export default memo(Pagination)
 
 Pagination.propTypes = {
-  itemsTotal: PropTypes.number,
-  itemsPerPage: PropTypes.number,
+  itemsTotal: PropTypes.number.isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
+  activePage: PropTypes.number.isRequired,
   loadPage: PropTypes.func
 }
 

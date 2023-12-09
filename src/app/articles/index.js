@@ -22,7 +22,7 @@ function Articles() {
   }
 
   useEffect(() => {
-    store.actions.catalog.loadArticle(id);
+    store.actions.catalog.loadArticleById(id);
   }, [id]);
 
   return (

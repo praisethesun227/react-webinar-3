@@ -17,8 +17,10 @@ class Catalog extends StoreModule {
     }
   }
 
-  async load(limit = 10, skip = 0, fields = 'items(_id, title, price)') {
-    const response = await fetch(`/api/v1/articles?limit=${limit}&skip=${skip}&fields=${fields}`);
+  async load(itemsPerPage = 10, page = 1, fields = 'items(_id, title, price)') {
+    const response = await fetch(
+      `/api/v1/articles?limit=${itemsPerPage}&skip=${(page - 1) * itemsPerPage}&fields=${fields}`
+    );
     const json = await response.json();
 
     const oldState = this.getState();
@@ -26,12 +28,12 @@ class Catalog extends StoreModule {
       ...oldState,
       list: json.result.items,
       totalCount: json.result.count ? json.result.count : oldState.totalCount,
-      currentPage: Math.ceil(skip / limit) + 1
+      currentPage: page
     }, 'Загружены товары из АПИ');
   }
 
-  async loadArticle(id, fields = '*,madeIn(title,code),category(title)') {
-    const result = await this.getArticle(id, fields);
+  async loadArticleById(id, fields = '*,madeIn(title,code),category(title)') {
+    const result = await this.getArticleById(id, fields);
 
     this.setState({
       ...this.getState(),
@@ -39,7 +41,7 @@ class Catalog extends StoreModule {
     }, 'Загружен товар по id из АПИ')
   }
 
-  async getArticle(id, fields = '*,madeIn(title,code),category(title)') {
+  async getArticleById(id, fields = '*,madeIn(title,code),category(title)') {
     const response = await fetch(`/api/v1/articles/${id}?fields=${fields}`);
     const json = await response.json();
 

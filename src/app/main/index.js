@@ -11,10 +11,7 @@ import Pagination from "../../components/pagination";
 function Main() {
 
   const store = useStore();
-
-  useEffect(() => {
-    store.actions.catalog.load(10, 0, 'items(_id, title, price),count');
-  }, []);
+  const ITEMS_PER_PAGE = 10;
 
   const select = useSelector(state => ({
     list: state.catalog.list,
@@ -24,13 +21,17 @@ function Main() {
     currentPage: state.catalog.currentPage
   }));
 
+  useEffect(() => {
+    store.actions.catalog.load(ITEMS_PER_PAGE, select.currentPage, 'items(_id, title, price),count');
+  }, []);
+
   const callbacks = {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     loadPage: useCallback((itemsPerPage, page) => {
-        store.actions.catalog.load(itemsPerPage, itemsPerPage * (page - 1));
+        store.actions.catalog.load(itemsPerPage, page);
       }, [store])
   }
 
@@ -46,7 +47,7 @@ function Main() {
       <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum}/>
       <List list={select.list} renderItem={renders.item}/>
       <Pagination itemsTotal={select.articleCount}
-                  itemsPerPage={10}
+                  itemsPerPage={ITEMS_PER_PAGE}
                   activePage={select.currentPage}
                   loadPage={callbacks.loadPage}
       />

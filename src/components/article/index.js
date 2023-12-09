@@ -45,6 +45,7 @@ export default memo(Article);
 
 Article.propTypes = {
   info: PropTypes.shape({
+    _id: PropTypes.string,
     description: PropTypes.string,
     madeIn: PropTypes.shape({
       title: PropTypes.string,
