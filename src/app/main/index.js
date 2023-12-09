@@ -23,7 +23,7 @@ function Main() {
   }));
 
   useEffect(() => {
-    store.actions.catalog.load(ITEMS_PER_PAGE, select.currentPage, 'items(_id, title, price),count');
+    store.actions.catalog.load(ITEMS_PER_PAGE, 1, 'items(_id, title, price),count');
   }, []);
 
   const callbacks = {
