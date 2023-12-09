@@ -6,6 +6,7 @@ import Article from "../../components/article";
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
 import BasketTool from "../../components/basket-tool";
+import Navigation from "../../components/navigation";
 
 function Articles() {
   const {id} = useParams();
@@ -28,8 +29,10 @@ function Articles() {
   return (
     <PageLayout>
       <Head title={select.article.title || '...'}/>
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-                  sum={select.sum}/>
+      <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+        <Navigation/>
+        <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum}/>
+      </div>
       {!!Object.keys(select.article).length && <Article info={select.article} onAdd={callbacks.addToBasket}/>}
     </PageLayout>
   );

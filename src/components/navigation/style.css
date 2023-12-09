@@ -1,0 +1,12 @@
+.Navigation {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+}
+
+.Navigation-link {
+  color: #0087E9;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  font-size: 18px;
+}
