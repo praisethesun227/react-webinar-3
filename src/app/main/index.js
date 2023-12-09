@@ -7,8 +7,6 @@ import List from "../../components/list";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import Pagination from "../../components/pagination";
-import {Route, Routes} from "react-router-dom";
-import Articles from "../articles";
 
 function Main() {
 
@@ -23,7 +21,6 @@ function Main() {
     amount: state.basket.amount,
     sum: state.basket.sum,
     articleCount: state.catalog.totalCount,
-    location: state.location.locationName,
     currentPage: state.catalog.currentPage
   }));
 
@@ -34,37 +31,25 @@ function Main() {
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     loadPage: useCallback((itemsPerPage, page) => {
         store.actions.catalog.load(itemsPerPage, itemsPerPage * (page - 1));
-      }, [store]),
-    changeLocation: useCallback((location) => store.actions.location.setLocation(location), [store])
+      }, [store])
   }
 
   const renders = {
     item: useCallback((item) => {
-      return <Item item={item} onAdd={callbacks.addToBasket} onClick={callbacks.changeLocation}/>
+      return <Item item={item} onAdd={callbacks.addToBasket}/>
     }, [callbacks.addToBasket]),
   };
 
   return (
     <PageLayout>
-      <Head title={select.location}/>
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-                  onChangeLoc={callbacks.changeLocation}
-                  sum={select.sum}/>
-      <Routes>
-        <Route
-          path='/'
-          element={
-            <>
-              <List list={select.list} renderItem={renders.item}/>
-              <Pagination itemsTotal={select.articleCount}
-                          itemsPerPage={10}
-                          activePage={select.currentPage}
-                          loadPage={callbacks.loadPage}
-              />
-            </>
-        }/>
-        <Route path='/articles/:id' element={<Articles/>}/>
-      </Routes>
+      <Head title={'Магазин'}/>
+      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum}/>
+      <List list={select.list} renderItem={renders.item}/>
+      <Pagination itemsTotal={select.articleCount}
+                  itemsPerPage={10}
+                  activePage={select.currentPage}
+                  loadPage={callbacks.loadPage}
+      />
     </PageLayout>
   );
 }

@@ -21,16 +21,12 @@ function Basket() {
     removeFromBasket: useCallback(_id => store.actions.basket.removeFromBasket(_id), [store]),
     // Закрытие любой модалки
     closeModal: useCallback(() => store.actions.modals.close(), [store]),
-    changeLocation: useCallback((location) => store.actions.location.setLocation(location), [store])
   }
 
   const renders = {
     itemBasket: useCallback((item) => {
       return <ItemBasket item={item} onRemove={callbacks.removeFromBasket}
-                         onClick={(location) => {
-                           callbacks.changeLocation(location);
-                           callbacks.closeModal();
-                         }}
+                         closeModal={callbacks.closeModal}
       />
     }, [callbacks.removeFromBasket]),
   };

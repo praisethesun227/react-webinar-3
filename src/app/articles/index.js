@@ -3,12 +3,17 @@ import {useParams} from "react-router-dom";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import Article from "../../components/article";
+import PageLayout from "../../components/page-layout";
+import Head from "../../components/head";
+import BasketTool from "../../components/basket-tool";
 
 function Articles() {
   const {id} = useParams();
   const store = useStore();
   const select = useSelector((state) => ({
     article: state.catalog.activeArticle,
+    amount: state.basket.amount,
+    sum: state.basket.sum
   }));
 
   const callbacks = {
@@ -21,9 +26,12 @@ function Articles() {
   }, [id]);
 
   return (
-    <>
-      {Object.keys(select.article).length && <Article info={select.article} onAdd={callbacks.addToBasket}/>}
-    </>
+    <PageLayout>
+      <Head title={select.article.title || '...'}/>
+      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
+                  sum={select.sum}/>
+      {!!Object.keys(select.article).length && <Article info={select.article} onAdd={callbacks.addToBasket}/>}
+    </PageLayout>
   );
 }
 

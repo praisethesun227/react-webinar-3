@@ -14,7 +14,10 @@ function App() {
 
   return (
     <>
-      <Main/>
+      <Routes>
+        <Route path='/' element={<Main/>}/>
+        <Route path='/articles/:id' element={<Articles/>}/>
+      </Routes>
       {activeModal === 'basket' && <Basket/>}
     </>
   );
