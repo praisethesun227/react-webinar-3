@@ -13,7 +13,7 @@ function Articles() {
   const {id} = useParams();
   const store = useStore();
   const select = useSelector((state) => ({
-    article: state.catalog.activeArticle,
+    article: state.article.activeArticle,
     amount: state.basket.amount,
     sum: state.basket.sum
   }));
@@ -24,7 +24,7 @@ function Articles() {
   }
 
   useEffect(() => {
-    store.actions.catalog.loadArticleById(id);
+    store.actions.article.loadArticle(id);
   }, [id]);
 
   return (
