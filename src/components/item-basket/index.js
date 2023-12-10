@@ -1,5 +1,4 @@
 import {memo} from 'react';
-import propTypes from 'prop-types';
 import {numberFormat} from "../../utils";
 import {cn as bem} from "@bem-react/classname";
 import PropTypes from "prop-types";
@@ -17,7 +16,11 @@ function ItemBasket(props) {
 
   return (
     <div className={cn()}>
-      <Link className={cn('title')} onClick={callbacks.onCloseModal} to={`/articles/${props.item._id}`}>{props.item.title}</Link>
+      {props.link ?
+        <Link className={cn('title')} onClick={callbacks.onCloseModal} to={props.link}>{props.item.title}</Link>
+        :
+        <div className={cn('title')}>{props.item.title}</div>
+      }
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
         <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} шт</div>
@@ -36,8 +39,9 @@ ItemBasket.propTypes = {
     price: PropTypes.number,
     amount: PropTypes.number
   }).isRequired,
-  onRemove: propTypes.func,
-  closeModal: propTypes.func
+  link: PropTypes.string,
+  onRemove: PropTypes.func,
+  closeModal: PropTypes.func
 }
 
 ItemBasket.defaultProps = {
