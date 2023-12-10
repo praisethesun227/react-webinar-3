@@ -8,6 +8,7 @@ import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import Pagination from "../../components/pagination";
 import Navigation from "../../components/navigation";
+import NavigationLayout from "../../components/navigation-layout";
 
 function Main() {
 
@@ -45,10 +46,10 @@ function Main() {
   return (
     <PageLayout>
       <Head title={'Магазин'}/>
-      <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+      <NavigationLayout>
         <Navigation/>
         <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum}/>
-      </div>
+      </NavigationLayout>
       <List list={select.list} renderItem={renders.item}/>
       <Pagination itemsTotal={select.articleCount}
                   itemsPerPage={ITEMS_PER_PAGE}
