@@ -1,0 +1,66 @@
+{
+  "main_head_title": {
+    "en": "Store",
+    "ru": "Магазин"
+  },
+  "basket_title": {
+    "en": "Basket",
+    "ru": "Корзина"
+  },
+  "basket_total": {
+    "en": "Total",
+    "ru": "Итого"
+  },
+  "basketTool_inBasket": {
+    "en": "Basket:",
+    "ru": "В корзине:"
+  },
+  "basketTool_empty": {
+    "en": "empty",
+    "ru": "пусто"
+  },
+  "product_one": {
+    "en": "product",
+    "ru": "товар"
+  },
+  "product_few": {
+    "en": "products",
+    "ru": "товара"
+  },
+  "product_many": {
+    "en": "products",
+    "ru": "товаров"
+  },
+  "basketTool_toBasket": {
+    "en": "To basket",
+    "ru": "Перейти"
+  },
+  "modal_close": {
+    "en": "Close",
+    "ru": "Закрыть"
+  },
+  "item_add": {
+    "en": "Add",
+    "ru": "Добавить"
+  },
+  "item_remove": {
+    "en": "Remove",
+    "ru": "Удалить"
+  },
+  "item_pcs": {
+    "en": "pcs",
+    "ru": "шт"
+  },
+  "navigation_link_main": {
+    "en": "Main",
+    "ru": "Главная"
+  },
+  "article_add": {
+    "en": "Add",
+    "ru": "Добавить"
+  },
+  "404": {
+    "en": "Translation not found",
+    "ru": "Перевод не найден"
+  }
+}

@@ -9,9 +9,11 @@ import useSelector from "../../store/use-selector";
 import Pagination from "../../components/pagination";
 import Navigation from "../../components/navigation";
 import NavigationLayout from "../../components/navigation-layout";
+import useLanguage from "../../language/use-language";
 
 function Main() {
 
+  const {langContext, translate} = useLanguage();
   const store = useStore();
   const ITEMS_PER_PAGE = 10;
 
@@ -34,21 +36,26 @@ function Main() {
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     loadPage: useCallback((itemsPerPage, page) => {
         store.actions.catalog.load(itemsPerPage, page);
-      }, [store])
+      }, [store]),
+    translate: useCallback((key, defaultValue) => {
+      return translate(key, langContext.lang, defaultValue);
+    }, [langContext.lang])
   }
 
   const renders = {
     item: useCallback((item) => {
-      return <Item link={`/articles/${item._id}`} item={item} onAdd={callbacks.addToBasket}/>
+      return <Item translate={callbacks.translate} link={`/articles/${item._id}`} item={item} onAdd={callbacks.addToBasket}/>
     }, [callbacks.addToBasket]),
   };
 
   return (
     <PageLayout>
-      <Head title={'Магазин'}/>
+      <Head title={callbacks.translate('main_head_title', 'Store')}/>
       <NavigationLayout>
-        <Navigation/>
-        <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum}/>
+        <Navigation translate={callbacks.translate}/>
+        <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
+                    sum={select.sum} translate={callbacks.translate}
+        />
       </NavigationLayout>
       <List list={select.list} renderItem={renders.item}/>
       <Pagination itemsTotal={select.articleCount}

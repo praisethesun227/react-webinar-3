@@ -32,7 +32,7 @@ function ModalLayout(props) {
       <div className={cn('frame')} ref={frame}>
         <div className={cn('head')}>
           <h1 className={cn('title')}>{props.title}</h1>
-          <button className={cn('close')} onClick={props.onClose}>Закрыть</button>
+          <button className={cn('close')} onClick={props.onClose}>{props.translate('modal_close', 'Close')}</button>
         </div>
         <div className={cn('content')}>
           {props.children}
@@ -46,11 +46,13 @@ ModalLayout.propTypes = {
   title: PropTypes.string,
   onClose: PropTypes.func,
   children: PropTypes.node,
+  translate: PropTypes.func
 };
 
 ModalLayout.defaultProps = {
   title: 'Модалка',
-  onClose: () => {}
+  onClose: () => {},
+  translate: (key, defaultVal) => defaultVal
 };
 
 export default memo(ModalLayout);

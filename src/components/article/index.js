@@ -35,7 +35,7 @@ function Article(props) {
       </div>
       <br/>
       <button className={cn('addBtn')} onClick={() => props.onAdd(info._id)}>
-        Добавить
+        {props.translate('article_add', 'Add')}
       </button>
     </div>
   )
@@ -57,9 +57,11 @@ Article.propTypes = {
     edition: PropTypes.number,
     price: PropTypes.number
   }).isRequired,
-  onAdd: PropTypes.func
+  onAdd: PropTypes.func,
+  translate: PropTypes.func
 }
 
 Article.defaultProps = {
-  onAdd: () => {}
+  onAdd: () => {},
+  translate: (key, defaultVal) => defaultVal
 }

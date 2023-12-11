@@ -23,9 +23,9 @@ function ItemBasket(props) {
       }
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
-        <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} шт</div>
+        <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} {props.translate('item_pcs', 'pcs')}</div>
         <div className={cn('cell')}>
-          <button onClick={callbacks.onRemove}>Удалить</button>
+          <button onClick={callbacks.onRemove}>{props.translate('item_remove', 'Remove')}</button>
         </div>
       </div>
     </div>
@@ -41,12 +41,14 @@ ItemBasket.propTypes = {
   }).isRequired,
   link: PropTypes.string,
   onRemove: PropTypes.func,
-  closeModal: PropTypes.func
+  closeModal: PropTypes.func,
+  translate: PropTypes.func
 }
 
 ItemBasket.defaultProps = {
   onRemove: () => {},
-  closeModal: () => {}
+  closeModal: () => {},
+  translate: (key, defaultVal) => defaultVal
 }
 
 export default memo(ItemBasket);

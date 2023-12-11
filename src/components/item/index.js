@@ -22,7 +22,7 @@ function Item(props) {
       }
       <div className={cn('actions')}>
         <div className={cn('price')}>{numberFormat(props.item.price)} ₽</div>
-        <button onClick={callbacks.onAdd}>Добавить</button>
+        <button onClick={callbacks.onAdd}>{props.translate('item_add', 'Add')}</button>
       </div>
     </div>
   );
@@ -36,10 +36,12 @@ Item.propTypes = {
   }).isRequired,
   link: PropTypes.string,
   onAdd: PropTypes.func,
+  translate: PropTypes.func
 };
 
 Item.defaultProps = {
   onAdd: () => {},
+  translate: (key, defaultVal) => defaultVal
 }
 
 export default memo(Item);
