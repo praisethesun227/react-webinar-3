@@ -13,7 +13,7 @@ function App() {
 
   const activeModal = useSelector(state => state.modals.name);
 
- const LangProvider = useLanguageProvider();
+  const LangProvider = useLanguageProvider();
 
   return (
     <LangProvider>
