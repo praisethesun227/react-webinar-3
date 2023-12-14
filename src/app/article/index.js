@@ -1,4 +1,4 @@
-import {memo, useCallback, useMemo} from 'react';
+import {memo, useCallback} from 'react';
 import {useParams} from "react-router-dom";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
@@ -10,6 +10,7 @@ import Navigation from "../../containers/navigation";
 import Spinner from "../../components/spinner";
 import ArticleCard from "../../components/article-card";
 import LocaleSelect from "../../containers/locale-select";
+import AuthPanel from "../../components/auth-panel";
 
 /**
  * Страница товара с первичной загрузкой товара по id из url адреса
@@ -27,6 +28,8 @@ function Article() {
   const select = useSelector(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
+    auth: state.user.authorized,
+    username: state.user.username
   }));
 
   const {t} = useTranslate();
@@ -34,10 +37,17 @@ function Article() {
   const callbacks = {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
+    onLogoff: useCallback(() => store.actions.user.logoff(), [store])
   }
 
   return (
     <PageLayout>
+      <AuthPanel
+        onLogoff={callbacks.onLogoff}
+        link={'/profile'} authorized={select.auth}
+        username={select.username}
+        t={t}
+      />
       <Head title={select.article.title}>
         <LocaleSelect/>
       </Head>

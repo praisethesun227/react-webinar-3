@@ -1,0 +1,12 @@
+.AuthHead {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 20px;
+}
+
+.AuthHead-username {
+  font-size: 13px;
+  color: #0087E9;
+}
