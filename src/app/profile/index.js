@@ -31,7 +31,8 @@ function Profile() {
   }, [select.auth]);
 
   const callbacks = {
-    onLogoff: useCallback(() => store.actions.user.logoff(), [store])
+    onLogoff: useCallback(() => store.actions.user.logoff(), [store]),
+    onLogin: useCallback(() => navigate('/login'), [])
   }
 
   const {t} = useTranslate();
@@ -42,6 +43,7 @@ function Profile() {
         onLogoff={callbacks.onLogoff}
         link={'/profile'} authorized={select.auth}
         username={select.username}
+        onLogin={callbacks.onLogin}
         t={t}
       />
       <Head title={t('title')}>

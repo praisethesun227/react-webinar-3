@@ -10,6 +10,7 @@ import CatalogList from "../../containers/catalog-list";
 import LocaleSelect from "../../containers/locale-select";
 import AuthPanel from "../../components/auth-panel";
 import useSelector from "../../hooks/use-selector";
+import {useNavigate} from "react-router-dom";
 
 /**
  * Главная страница - первичная загрузка каталога
@@ -22,12 +23,15 @@ function Main() {
     username: state.user.username
   }))
 
+  const navigate = useNavigate();
+
   useInit(() => {
     store.actions.catalog.initParams();
   }, [], true);
 
   const callbacks = {
-    onLogoff: useCallback(() => store.actions.user.logoff(), [store])
+    onLogoff: useCallback(() => store.actions.user.logoff(), [store]),
+    onLogin: useCallback(() => navigate('/login'), [])
   }
 
   const {t} = useTranslate();
@@ -38,6 +42,7 @@ function Main() {
         onLogoff={callbacks.onLogoff}
         link={'/profile'} authorized={select.auth}
         username={select.username}
+        onLogin={callbacks.onLogin}
         t={t}
       />
       <Head title={t('title')}>

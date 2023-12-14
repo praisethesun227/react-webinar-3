@@ -8,6 +8,7 @@ import useTranslate from "../../hooks/use-translate";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import LocaleSelect from "../../containers/locale-select";
+import {useNavigate} from "react-router-dom";
 
 function Login() {
   const store = useStore();
@@ -17,9 +18,12 @@ function Login() {
     errorMsg: state.user.errorMessage
   }))
 
+  const navigate = useNavigate();
+
   const callbacks = {
     authorize: useCallback((login, password) => store.actions.user.auth(login, password), [store]),
-    onLogoff: useCallback(() => store.actions.user.logoff(), [store])
+    onLogoff: useCallback(() => store.actions.user.logoff(), [store]),
+    onLogin: useCallback(() => navigate('/login'), [])
   }
 
   const {t} = useTranslate();
@@ -30,6 +34,7 @@ function Login() {
           onLogoff={callbacks.onLogoff}
           link={'/profile'} authorized={select.auth}
           username={select.username}
+          onLogin={callbacks.onLogin}
           t={t}
         />
         <Head title={t('title')}>

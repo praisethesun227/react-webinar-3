@@ -1,5 +1,5 @@
 import {memo, useCallback} from 'react';
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import useTranslate from "../../hooks/use-translate";
@@ -32,12 +32,14 @@ function Article() {
     username: state.user.username
   }));
 
+  const navigate = useNavigate();
   const {t} = useTranslate();
 
   const callbacks = {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
-    onLogoff: useCallback(() => store.actions.user.logoff(), [store])
+    onLogoff: useCallback(() => store.actions.user.logoff(), [store]),
+    onLogin: useCallback(() => navigate('/login'), [])
   }
 
   return (
@@ -46,6 +48,7 @@ function Article() {
         onLogoff={callbacks.onLogoff}
         link={'/profile'} authorized={select.auth}
         username={select.username}
+        onLogin={callbacks.onLogin}
         t={t}
       />
       <Head title={select.article.title}>

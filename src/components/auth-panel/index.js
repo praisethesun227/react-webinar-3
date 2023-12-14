@@ -16,9 +16,7 @@ function AuthPanel(props) {
             <button onClick={props.onLogoff} className={cn('logoff')}>{props.t('auth.logoff')}</button>
           </>
           :
-          <Link className={cn('login')} to={'/login'}>
-            <button>{props.t('auth.login')}</button>
-          </Link>
+            <button onClick={props.onLogin}>{props.t('auth.login')}</button>
       }
     </div>
   )
@@ -28,12 +26,14 @@ AuthPanel.propTypes = {
   authorized: PropTypes.bool,
   username: PropTypes.string,
   onLogoff: PropTypes.func,
+  onLogin: PropTypes.func,
   t: PropTypes.func
 };
 
 AuthPanel.defaultProps = {
   t: (text) => text,
-  onLogoff: () => {}
+  onLogoff: () => {},
+  onLogin: () => {}
 }
 
 export default memo(AuthPanel);
