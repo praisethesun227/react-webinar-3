@@ -1,4 +1,4 @@
-.AuthHead {
+.AuthPanel {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -6,7 +6,7 @@
   padding: 10px 20px;
 }
 
-.AuthHead-username {
+.AuthPanel-username {
   font-size: 13px;
   color: #0087E9;
 }

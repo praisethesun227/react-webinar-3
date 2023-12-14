@@ -5,7 +5,7 @@ import {cn as bem} from '@bem-react/classname';
 import {Link} from "react-router-dom";
 
 function AuthPanel(props) {
-  const cn = bem('AuthHead');
+  const cn = bem('AuthPanel');
 
   return (
     <div className={cn()}>
