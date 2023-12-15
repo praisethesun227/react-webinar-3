@@ -40,7 +40,7 @@ function CatalogFilter() {
     ]), []),
     category: [
       {value: '', title: 'Все'},
-      ...useMemo(() => formatCategoriesTree(select.categories), [select.categories])
+      ...formatCategoriesTree(select.categories)
     ]
   };
 
