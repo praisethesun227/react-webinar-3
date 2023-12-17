@@ -40,18 +40,18 @@ export function formatCategoriesTree(categories) {
     tree.has(c.parent?._id) ? tree.get(c.parent?._id).push(c) : tree.set(c.parent?._id, [c]);
   }
 
-  const getFormattedTree = (nodes, level) => {
+  const formatted = [];
+  const formatTree = (nodes, level) => {
     if (!nodes)
-      return [];
+      return;
 
-    let categories = [];
     for (const node of nodes) {
-      categories = [...categories, ...getFormattedTree(tree.get(node._id), level + 1)];
-      categories.push({value: node._id, title: '- '.repeat(level) + node.title});
+      formatted.push({value: node._id, title: '- '.repeat(level) + node.title});
+      formatTree(tree.get(node._id), level + 1);
     }
-
-    return categories;
   }
 
-  return getFormattedTree(tree.get(undefined), 0).reverse();
+  formatTree(tree.get(undefined), 0);
+
+  return formatted;
 }
