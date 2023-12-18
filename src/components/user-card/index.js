@@ -12,15 +12,15 @@ function UserCard(props) {
       <div className={cn('info')}>
         <div className={cn('name')}>
           <span className={cn('label')}>{props.t('usercard.name')}: </span>
-          <span className={cn('value')}>{props.userdata.profile?.name}</span>
+          <span className={cn('value')}>{props.userdata?.profile?.name}</span>
         </div>
         <div className={cn('phone')}>
           <span className={cn('label')}>{props.t('usercard.phone')}: </span>
-          <span className={cn('value')}>{props.userdata.profile?.phone}</span>
+          <span className={cn('value')}>{props.userdata?.profile?.phone}</span>
         </div>
         <div className={cn('email')}>
           <span className={cn('label')}>{props.t('usercard.email')}: </span>
-          <span className={cn('value')}>{props.userdata.email}</span>
+          <span className={cn('value')}>{props.userdata?.email}</span>
         </div>
       </div>
     </div>
