@@ -6,6 +6,7 @@ import Select from "../../components/select";
 import Input from "../../components/input";
 import SideLayout from "../../components/side-layout";
 import {formatCategoriesTree} from "../../utils";
+import Spinner from "../../components/spinner";
 
 /**
  * Контейнер со всеми фильтрами каталога
@@ -18,7 +19,8 @@ function CatalogFilter() {
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
     category: state.catalog.params.category,
-    categories: state.catalog.categories
+    categories: state.categories.categoriesList,
+    categoriesWaiting: state.categories.waiting
   }));
 
   const callbacks = {
@@ -28,6 +30,7 @@ function CatalogFilter() {
     onSearch: useCallback(query => store.actions.catalog.setParams({query, page: 1}), [store]),
     // Сброс
     onReset: useCallback(() => store.actions.catalog.resetParams(), [store]),
+    // Категории
     onCategorize: useCallback(category => store.actions.catalog.setParams({category, page: 1}), [store])
   };
 
@@ -48,7 +51,9 @@ function CatalogFilter() {
 
   return (
     <SideLayout padding='medium'>
-      <Select options={options.category} value={select.category} onChange={callbacks.onCategorize}/>
+      <Spinner active={select.categoriesWaiting}>
+        <Select options={options.category} value={select.category} onChange={callbacks.onCategorize}/>
+      </Spinner>
       <Select options={options.sort} value={select.sort} onChange={callbacks.onSort}/>
       <Input value={select.query} onChange={callbacks.onSearch} placeholder={'Поиск'}
              delay={600}/>
