@@ -15,21 +15,17 @@ import {useNavigate} from "react-router-dom";
 function Profile() {
   const store = useStore();
   const select = useSelector(state => ({
-    auth: state.user.authorized,
     username: state.user.username,
-    userdata: state.user.userdata,
-    waiting: state.user.waiting
+    userdata: state.profile.userdata,
+    waiting: state.profile.waiting,
+    auth: state.user.authorized
   }))
 
-  const navigate = useNavigate();
-
   useInit(() => {
-    if (!store.actions.user.checkAuth())
-      navigate('/login');
-    else
-      store.actions.user.loadUserData();
-  }, [select.auth]);
+    store.actions.profile.loadUserData();
+  });
 
+  const navigate = useNavigate();
   const callbacks = {
     onLogoff: useCallback(() => store.actions.user.logoff(), [store]),
     onLogin: useCallback(() => navigate('/login'), [])

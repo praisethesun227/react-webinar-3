@@ -21,7 +21,10 @@ function Login() {
   const navigate = useNavigate();
 
   const callbacks = {
-    authorize: useCallback((login, password) => store.actions.user.auth(login, password), [store]),
+    authorize: useCallback(async (login, password) => {
+      await store.actions.user.auth(login, password);
+      navigate('/profile');
+    }, [store]),
     onLogoff: useCallback(() => store.actions.user.logoff(), [store]),
     onLogin: useCallback(() => navigate('/login'), [])
   }

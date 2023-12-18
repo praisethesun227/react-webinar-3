@@ -7,6 +7,7 @@ import Login from "./login";
 import Profile from "./profile";
 import useInit from "../hooks/use-init";
 import useStore from "../hooks/use-store";
+import AuthGuard from "../containers/auth-guard";
 
 /**
  * Приложение
@@ -26,7 +27,11 @@ function App() {
         <Route path={''} element={<Main/>}/>
         <Route path={'/articles/:id'} element={<Article/>}/>
         <Route path={'/login'} element={<Login/>}/>
-        <Route path={'/profile'} element={<Profile/>}/>
+        <Route path={'/profile'} element={
+          <AuthGuard redirect={'/login'}>
+            <Profile/>
+          </AuthGuard>
+        }/>
       </Routes>
 
       {activeModal === 'basket' && <Basket/>}

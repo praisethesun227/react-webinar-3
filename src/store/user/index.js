@@ -7,20 +7,51 @@ class UserState extends StoreModule {
       authorized: false,
       username: null,
       errorMessage: null,
-      userdata: {},
-      waiting: false
+      initComplete: false
     }
   }
 
   async initAuth() {
-    if (!this.checkAuth())
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.setState({
+        ...this.initState(),
+        initComplete: true
+      })
       return;
+    }
 
-    await this.loadUserData();
-  }
+    const params = {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json', 'X-Token': token},
+    }
 
-  checkAuth() {
-    return !!localStorage.getItem('token');
+    try {
+      const response = await fetch('/api/v1/users/self?fields=*', {...params});
+      const json = await response.json();
+
+      if (json.error) {
+        this.setState({
+          ...this.initState(),
+          initComplete: true
+        })
+        return;
+      }
+
+      this.setState({
+        ...this.getState(),
+        authorized: true,
+        initComplete: true,
+        username: json.result.profile.name
+      }, 'Восстановленна сессия')
+    }
+
+    catch (e) {
+      this.setState({
+        ...this.initState(),
+        initComplete: true
+      })
+    }
   }
 
   async logoff() {
@@ -34,47 +65,9 @@ class UserState extends StoreModule {
     localStorage.removeItem('token');
 
     this.setState({
-      ...this.initState()
+      ...this.initState(),
+      initComplete: true
     })
-  }
-
-  async loadUserData() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      return;
-    }
-
-    this.setState({
-      ...this.getState(),
-      waiting: true
-    })
-
-    const params = {
-      method: 'GET',
-      headers: {'Content-Type': 'application/json', 'X-Token': token},
-    }
-
-    try {
-      const response = await fetch('/api/v1/users/self?fields=*', {...params});
-      const json = await response.json();
-
-      this.setState({
-        ...this.getState(),
-        userdata: json.result,
-        authorized: true,
-        username: json.result.profile.name,
-        waiting: false
-      }, 'Загрузка данных пользователя')
-    }
-
-    catch (error) {
-      console.log(error);
-      this.setState({
-        ...this.getState(),
-        waiting: false,
-        userdata: {}
-      })
-    }
   }
 
   async auth(login, password) {
@@ -94,13 +87,15 @@ class UserState extends StoreModule {
         if (json.error) {
           this.setState({
             ...this.initState(),
-            errorMessage: json.error.data.issues.message || json.error.message
+            initComplete: true,
+            errorMessage: json.error.data?.issues[0]?.message || json.error.message || 'Unknown error'
           }, 'Установка состояния ошибки')
         }
 
         else {
           this.setState({
             ...this.initState(),
+            initComplete: true,
             errorMessage: 'Unknown error'
           }, 'Установка состояния ошибки')
         }
@@ -120,6 +115,7 @@ class UserState extends StoreModule {
     catch (error) {
       this.setState({
         ...this.initState(),
+        initComplete: true,
         errorMessage: error.message || 'Unknown error'
       }, 'Установка состояния ошибки')
     }
