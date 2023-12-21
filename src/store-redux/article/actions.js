@@ -18,7 +18,7 @@ export default {
 
       } catch (e) {
         //Ошибка загрузки
-        dispatch({type: 'article/load-error'});
+        dispatch({type: 'article/load-error', payload: {error: e.message}});
       }
     }
   },

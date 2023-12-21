@@ -1,0 +1,30 @@
+.AddCommentFormFallback {
+  padding-top: 20px;
+}
+
+.AddCommentFormFallback-link {
+  color: #0087E9;
+  font-size: 16px;
+  text-decoration-line: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 2px;
+}
+
+.AddCommentFormFallback-prompt {
+  color: #000;
+  font-size: 16px;
+}
+
+.AddCommentFormFallback-cancel {
+  color: #666;
+  font-size: 16px;
+  text-decoration-line: underline;
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
+  cursor: pointer;
+  display: inline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 2px;
+}

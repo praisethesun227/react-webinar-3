@@ -1,0 +1,39 @@
+.AddCommentForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
+  width: 100%;
+}
+
+.AddCommentForm-head {
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.AddCommentForm-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.AddCommentForm textarea {
+  font-family: Arial, serif;
+  color: #000;
+  font-size: 14px;
+  display: block;
+  resize: none;
+  border: 1px solid;
+  padding: 5px;
+}
+
+.AddCommentForm textarea:focus {
+  outline: none;
+}
+
+.AddCommentForm textarea::placeholder {
+  font-family: Arial, serif;
+  color: #000;
+  font-size: 14px;
+}
