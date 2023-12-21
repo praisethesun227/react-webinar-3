@@ -8,12 +8,20 @@ function AddCommentFormFallback(props) {
   const cn = bem('AddCommentFormFallback');
 
   const callbacks = {
-    onCancel: props.onCancel
+    onCancel: props.onCancel,
   }
 
   return (
     <div className={cn()}>
-      <Link className={cn('link')} to={props.link}>{props.t('addCommentFormFallback.loginLink')}</Link>
+      <Link
+        className={cn('link')}
+        to={props.link}
+        state={{
+          back: location.pathname
+        }}
+      >
+        {props.t('addCommentFormFallback.loginLink')}
+      </Link>
       {
         props.replyMode ?
           <>
