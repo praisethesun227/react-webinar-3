@@ -16,7 +16,7 @@ export default {
 
         dispatch({type: 'comments/load-success', payload: {data: res.data.result}});
       } catch (e) {
-        dispatch({type: 'comments/load-error'});
+        dispatch({type: 'comments/load-error', payload: {error: e.message}});
       }
     }
   },

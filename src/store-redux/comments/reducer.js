@@ -14,16 +14,16 @@ export const initialState = {
 function reducer(state = initialState, action) {
   switch (action.type) {
     case "comments/load-start":
-      return {...state, data: initialData, parentId: action.payload.parentId, waiting: true};
+      return {...state, data: initialData, parentId: action.payload.parentId, waiting: true, lastError: {}};
 
     case "comments/load-success":
       return {...state, data: action.payload.data, waiting: false};
 
     case "comments/load-error":
-      return {...state, data: initialData, parentId: null, waiting: false};
+      return {...state, data: initialData, parentId: null, waiting: false, lastError: action.payload.error};
 
     case "comments/post-start":
-      return {...state, waiting: true}
+      return {...state, waiting: true, lastError: {}}
 
     case "comments/post-success":
       return {

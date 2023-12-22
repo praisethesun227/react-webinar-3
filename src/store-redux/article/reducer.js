@@ -9,7 +9,7 @@ export const initialState = {
 function reducer(state = initialState, action) {
   switch (action.type) {
     case "article/load-start":
-      return {...state, data: {}, waiting: true};
+      return {...state, data: {}, waiting: true, lastError: {}};
 
     case "article/load-success":
       return {...state, data: action.payload.data, waiting: false};
