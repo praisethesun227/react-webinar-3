@@ -24,7 +24,7 @@ function Comment(props) {
   return (
     <div className={cn()} style={{paddingLeft: `${props.comment.nestingLevel * NESTING_INDENT}px`}}>
       <div className={cn('head')}>
-        <span className={cn('username')}>{props.comment.author.profile.name}</span>
+        <span className={cn('username', {highlighted: props.comment.highlighted})}>{props.comment.author.profile.name}</span>
         <span className={cn('date')}>{props.comment.formattedDate}</span>
       </div>
       <div className={cn('text')}>
@@ -71,7 +71,8 @@ Comment.propTypes = {
       })
     }),
     formattedDate: PropTypes.string,
-    text: PropTypes.string
+    text: PropTypes.string,
+    highlighted: PropTypes.bool
   }).isRequired
 }
 

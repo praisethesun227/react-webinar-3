@@ -1,3 +1,4 @@
 .CommentsList {
   padding: 0 40px 30px;
+  overflow-x: auto;
 }

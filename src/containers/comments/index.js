@@ -12,7 +12,8 @@ import commentsActions from '../../store-redux/comments/actions';
 
 function Comments() {
   const selectStore = useSelectorStore(state => ({
-    authorized: state.session.exists
+    authorized: state.session.exists,
+    authorizedUserId: state.session.user?._id
   }))
 
   const select = useSelector(state => ({
@@ -49,8 +50,9 @@ function Comments() {
   const comments = useMemo(() => treeToList(listToTree(select.comments), (comment, level) => ({
     ...comment,
     nestingLevel: level - 1,
-    formattedDate: localizedDateFormat(comment.dateCreate, t)
-  })).slice(1), [select.comments, lang, localizedDateFormat]);
+    formattedDate: localizedDateFormat(comment.dateCreate, t),
+    highlighted: comment.author?._id === selectStore.authorizedUserId
+  })).slice(1), [select.comments, lang, localizedDateFormat, selectStore.authorizedUserId]);
 
   return (
     <>

@@ -39,3 +39,10 @@
 .Comment .AddCommentFormFallback {
   padding-bottom: 0;
 }
+
+.Comment-username_highlighted {
+  color: #666;
+  font-family: Arial, serif;
+  font-size: 12px;
+  font-weight: 700;
+}
