@@ -22,6 +22,7 @@ function CommentsList(props) {
           <Comment
             key={comment._id}
             selected={comment._id === props.selectedComment}
+            justPostedByUser={comment.justPostedByUser}
             comment={comment}
             authorized={props.authorized}
             onSubmit={props.onSubmit}

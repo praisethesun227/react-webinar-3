@@ -1,4 +1,4 @@
-import {memo, useCallback} from "react";
+import {memo, useCallback, useEffect, useRef} from "react";
 import PropTypes, {shape} from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
@@ -9,6 +9,8 @@ function Comment(props) {
   const NESTING_INDENT = 30;
   const NESTING_LIMIT = 15;
   const cn = bem('Comment');
+
+  const commentRef = useRef(null);
 
   const callbacks = {
     onSelect: useCallback(() => {
@@ -24,8 +26,17 @@ function Comment(props) {
 
   const nestingLevel = props.comment.nestingLevel > NESTING_LIMIT ? NESTING_LIMIT : props.comment.nestingLevel;
 
+  useEffect(() => {
+    if (props.justPostedByUser) {
+      const rect = commentRef.current.getBoundingClientRect();
+      if (rect.top < 0 || rect.bottom > window.innerHeight) {
+        commentRef.current.scrollIntoView({behavior: "smooth"});
+      }
+    }
+  }, []);
+
   return (
-    <div className={cn()} style={{paddingLeft: `${nestingLevel * NESTING_INDENT}px`}}>
+    <div ref={commentRef} className={cn()} style={{paddingLeft: `${nestingLevel * NESTING_INDENT}px`}}>
       <div className={cn('head')}>
         <span className={cn('username', {highlighted: props.comment.highlighted})}>{props.comment.author.profile.name}</span>
         <span className={cn('date')}>{props.comment.formattedDate}</span>

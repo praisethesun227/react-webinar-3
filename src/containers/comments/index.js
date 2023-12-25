@@ -20,7 +20,8 @@ function Comments() {
     comments: state.comments.data.items,
     count: state.comments.data.count,
     waiting: state.comments.waiting,
-    parentId: state.comments.parentId
+    parentId: state.comments.parentId,
+    justPostedUserComment: state.comments.justPostedUserComment
   }))
 
   const dispatch = useDispatch();
@@ -51,8 +52,15 @@ function Comments() {
     ...comment,
     nestingLevel: level - 1,
     formattedDate: localizedDateFormat(comment.dateCreate, t),
-    highlighted: comment.author?._id === selectStore.authorizedUserId
-  })).slice(1), [select.comments, lang, localizedDateFormat, selectStore.authorizedUserId]);
+    highlighted: comment.author?._id === selectStore.authorizedUserId,
+    justPostedByUser: comment._id === select.justPostedUserComment._id
+  })).slice(1),
+    [
+    select.comments,
+    lang,
+    localizedDateFormat,
+    selectStore.authorizedUserId
+  ]);
 
   return (
     <>

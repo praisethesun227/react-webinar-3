@@ -7,14 +7,14 @@ export const initialState = {
   data: initialData,
   parentId: null,
   waiting: false,
-  lastPostedComment: {},
+  justPostedUserComment: {},
   lastError: ''
 }
 
 function reducer(state = initialState, action) {
   switch (action.type) {
     case "comments/load-start":
-      return {...state, data: initialData, parentId: action.payload.parentId, waiting: true, lastError: {}};
+      return {...state, data: initialData, justPostedUserComment: {}, parentId: action.payload.parentId, waiting: true, lastError: {}};
 
     case "comments/load-success":
       return {...state, data: action.payload.data, waiting: false};
@@ -30,12 +30,12 @@ function reducer(state = initialState, action) {
         ...state,
         data: {items: [...state.data.items, action.payload.data], count: state.data.count + 1},
         waiting: false,
-        lastPostedComment: action.payload.data
+        justPostedUserComment: action.payload.data
       }
 
     case "comments/post-error":
       console.error(action.payload.error);
-      return {...state, lastError: action.payload.error, waiting: false}
+      return {...state, lastError: action.payload.error, justPostedUserComment: {}, waiting: false}
 
     default:
       return state;
