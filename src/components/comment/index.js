@@ -7,6 +7,7 @@ import AddCommentFormFallback from "../add-comment-form-fallback";
 
 function Comment(props) {
   const NESTING_INDENT = 30;
+  const NESTING_LIMIT = 15;
   const cn = bem('Comment');
 
   const callbacks = {
@@ -21,8 +22,10 @@ function Comment(props) {
     }, [props.comment._id])
   }
 
+  const nestingLevel = props.comment.nestingLevel > NESTING_LIMIT ? NESTING_LIMIT : props.comment.nestingLevel;
+
   return (
-    <div className={cn()} style={{paddingLeft: `${props.comment.nestingLevel * NESTING_INDENT}px`}}>
+    <div className={cn()} style={{paddingLeft: `${nestingLevel * NESTING_INDENT}px`}}>
       <div className={cn('head')}>
         <span className={cn('username', {highlighted: props.comment.highlighted})}>{props.comment.author.profile.name}</span>
         <span className={cn('date')}>{props.comment.formattedDate}</span>
