@@ -22,7 +22,7 @@ function AddCommentForm(props) {
   }
 
   return (
-    <form className={cn()} onSubmit={callbacks.onSubmit}>
+    <form style={{paddingLeft: props.replyMode ? `${props.indent}px` : '0px'}} className={cn()} onSubmit={callbacks.onSubmit}>
       <div className={cn('head')}>{props.t('addCommentForm.head')}</div>
       <textarea
         name={'comment'}
@@ -51,7 +51,8 @@ AddCommentForm.propTypes = {
   t: PropTypes.func,
   onCancel: PropTypes.func,
   replyMode: PropTypes.bool,
-  username: PropTypes.string
+  username: PropTypes.string,
+  indent: PropTypes.number,
 }
 
 AddCommentForm.defaultProps = {

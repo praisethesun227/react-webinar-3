@@ -12,7 +12,7 @@ function AddCommentFormFallback(props) {
   }
 
   return (
-    <div className={cn()}>
+    <div style={{paddingLeft: props.replyMode ? `${props.indent}px` : '0px'}} className={cn()}>
       <Link
         className={cn('link')}
         to={props.link}
@@ -40,6 +40,7 @@ AddCommentFormFallback.propTypes = {
   onCancel: PropTypes.func,
   link: PropTypes.string,
   replyMode: PropTypes.bool,
+  indent: PropTypes.number,
   t: PropTypes.func
 }
 

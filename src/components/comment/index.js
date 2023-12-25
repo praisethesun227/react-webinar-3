@@ -48,6 +48,7 @@ function Comment(props) {
         props.selected ?
           props.authorized ?
             <AddCommentForm
+              indent={NESTING_INDENT}
               parentId={props.comment._id}
               onSubmit={callbacks.onSubmit}
               onCancel={callbacks.onCancel}
@@ -57,6 +58,7 @@ function Comment(props) {
             />
             :
             <AddCommentFormFallback
+              indent={NESTING_INDENT}
               t={props.t}
               link={props.fallbackLink}
               onCancel={callbacks.onCancel}
@@ -76,6 +78,7 @@ Comment.propTypes = {
   authorized: PropTypes.bool,
   fallbackLink: PropTypes.string,
   t: PropTypes.func,
+  justPostedByUser: PropTypes.bool,
   comment: PropTypes.shape({
     _id: PropTypes.string,
     nestingLevel: PropTypes.number,

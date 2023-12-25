@@ -56,7 +56,8 @@ CommentsList.propTypes = {
   fallbackLink: PropTypes.string,
   t: PropTypes.func,
   comments: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string
+    _id: PropTypes.string,
+    justPostedByUser: PropTypes.bool
   })).isRequired
 }
 
