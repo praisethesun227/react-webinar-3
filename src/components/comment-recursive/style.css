@@ -26,6 +26,7 @@
 .CommentRecursive-text {
   font-size: 14px;
   word-break: break-word;
+  padding-right: 40px;
 }
 
 .CommentRecursive-replyBtn {
