@@ -1,14 +1,12 @@
 import {memo, useCallback, useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {default as useSelectorStore} from '../../hooks/use-selector';
-import Spinner from "../../components/spinner";
 import listToTree from "../../utils/list-to-tree";
-import treeToList from "../../utils/tree-to-list";
 import CommentsTitle from "../../components/comments-title";
 import useTranslate from "../../hooks/use-translate";
-import CommentsList from "../../components/comments-list";
-import localizedDateFormat from "../../utils/localized-date-format";
 import commentsActions from '../../store-redux/comments/actions';
+import CommentRecursive from "../../components/comment-recursive";
+import Spinner from "../../components/spinner";
 
 function Comments() {
   const selectStore = useSelectorStore(state => ({
@@ -48,34 +46,26 @@ function Comments() {
     }, [select.parentId, setSelectedComment])
   }
 
-  const comments = useMemo(() => treeToList(listToTree(select.comments), (comment, level) => ({
-    ...comment,
-    nestingLevel: level - 1,
-    formattedDate: localizedDateFormat(comment.dateCreate, t),
-    highlighted: comment.author?._id === selectStore.authorizedUserId,
-    justPostedByUser: comment._id === select.justPostedUserComment._id
-  })).slice(1),
-    [
-    select.comments,
-    lang,
-    localizedDateFormat,
-    selectStore.authorizedUserId
-  ]);
+  const commentsTree = useMemo(() => listToTree(select.comments), [select.comments, lang])
 
   return (
     <>
       <CommentsTitle title={t('comments.title')} count={select.count}/>
       <Spinner active={select.waiting}>
-        <CommentsList
-          parent={select.parentId}
-          selectedComment={selectedComment}
-          comments={comments}
+        <CommentRecursive
+          childComments={commentsTree}
+          nestingLevel={0}
+          nestingLimit={15}
+          nestingPadding={30}
+          nestingStartPadding={40}
           authorized={selectStore.authorized}
           onSelect={callbacks.onSelect}
-          onSubmit={callbacks.onSubmit}
-          onCancel={callbacks.onCancel}
-          fallbackLink={'/login'}
+          selectedComment={selectedComment}
           t={t}
+          parentArticle={select.parentId}
+          onCancel={callbacks.onCancel}
+          onSubmit={callbacks.onSubmit}
+          authorizedUserId={selectStore.authorizedUserId}
         />
       </Spinner>
     </>

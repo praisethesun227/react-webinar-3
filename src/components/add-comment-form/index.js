@@ -1,4 +1,4 @@
-import {memo, useState} from "react";
+import {memo, useEffect, useRef, useState} from "react";
 import PropTypes from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
@@ -21,8 +21,23 @@ function AddCommentForm(props) {
     onCancel: props.onCancel
   }
 
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    const rect = formRef.current.getBoundingClientRect();
+    if (rect.top < 0 || rect.bottom > window.innerHeight && props.replyMode === true) {
+      formRef.current.scrollIntoView({behavior: "smooth", block: 'center'});
+    }
+  }, []);
+
   return (
-    <form style={{paddingLeft: props.replyMode ? `${props.indent}px` : '0px'}} className={cn()} onSubmit={callbacks.onSubmit}>
+    <form
+      ref={formRef}
+      style={{
+        paddingLeft: props.replyMode ? `${props.replyIndent}px` : `${props.defaultIndent}px`,
+        paddingBottom: !props.replyMode ? `${props.replyIndent}px` : `${props.defaultIndent}px`
+    }}
+      className={cn()} onSubmit={callbacks.onSubmit}>
       <div className={cn('head')}>{props.t('addCommentForm.head')}</div>
       <textarea
         name={'comment'}
@@ -40,7 +55,7 @@ function AddCommentForm(props) {
       }
       <div className={cn('actions')}>
         <button type={'submit'}>{props.t('addCommentForm.submit')}</button>
-        {props.replyMode && <button onClick={callbacks.onCancel} type={'submit'}>{props.t('addCommentForm.cancel')}</button>}
+        {props.replyMode && <button onClick={callbacks.onCancel} type={'button'}>{props.t('addCommentForm.cancel')}</button>}
       </div>
     </form>
   )

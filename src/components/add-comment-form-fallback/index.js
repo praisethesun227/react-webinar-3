@@ -1,4 +1,4 @@
-import {memo} from "react";
+import {memo, useEffect, useRef} from "react";
 import PropTypes from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
@@ -11,8 +11,23 @@ function AddCommentFormFallback(props) {
     onCancel: props.onCancel,
   }
 
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    const rect = formRef.current.getBoundingClientRect();
+    if (rect.top < 0 || rect.bottom > window.innerHeight && props.replyMode === true) {
+      formRef.current.scrollIntoView({behavior: "smooth", block: 'center'});
+    }
+  }, []);
+
   return (
-    <div style={{paddingLeft: props.replyMode ? `${props.indent}px` : '0px'}} className={cn()}>
+    <div
+      ref={formRef}
+      style={{
+        paddingLeft: props.replyMode ? `${props.replyIndent}px` : `${props.defaultIndent}px`,
+        paddingBottom: !props.replyMode ? `${props.replyIndent}px` : `${props.defaultIndent}px`
+    }}
+      className={cn()}>
       <Link
         className={cn('link')}
         to={props.link}
@@ -27,7 +42,7 @@ function AddCommentFormFallback(props) {
           <>
             <span className={cn('prompt')}>{props.t('addCommentFormFallback.replyPrompt')}</span>
             <span> </span>
-            <button className={cn('cancel')} onClick={callbacks.onCancel}>{props.t('addCommentFormFallback.replyCancel')}</button>
+            <button type={'button'} className={cn('cancel')} onClick={callbacks.onCancel}>{props.t('addCommentFormFallback.replyCancel')}</button>
           </>
           :
           <span className={cn('prompt')}>{props.t('addCommentFormFallback.commentPrompt')}</span>
