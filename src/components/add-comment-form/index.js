@@ -10,6 +10,7 @@ function AddCommentForm(props) {
   const callbacks = {
     onSubmit: (e) => {
       e.preventDefault();
+      if (comment.trim() === '') return;
       props.onSubmit(comment);
     },
     onCancel: props.onCancel
