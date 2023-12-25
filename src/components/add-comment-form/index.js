@@ -5,13 +5,18 @@ import './style.css';
 
 function AddCommentForm(props) {
   const [comment, setComment] = useState('');
+  const [emptyMsgError, setEmptyMsgError] = useState(false);
   const cn = bem('AddCommentForm');
 
   const callbacks = {
     onSubmit: (e) => {
       e.preventDefault();
-      if (comment.trim() === '') return;
+      if (comment.trim() === '') {
+        setEmptyMsgError(true);
+        return;
+      }
       props.onSubmit(comment);
+      setEmptyMsgError(false);
     },
     onCancel: props.onCancel
   }
@@ -27,6 +32,12 @@ function AddCommentForm(props) {
         rows={4}
       >
       </textarea>
+      {
+        emptyMsgError &&
+        <div className={cn('emptyMsgError')}>
+          Комментарий не может быть пустым
+        </div>
+      }
       <div className={cn('actions')}>
         <button type={'submit'}>{props.t('addCommentForm.submit')}</button>
         {props.replyMode && <button onClick={callbacks.onCancel} type={'submit'}>{props.t('addCommentForm.cancel')}</button>}
